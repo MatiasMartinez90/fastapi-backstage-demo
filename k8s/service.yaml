@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-backstage-demo
+  namespace: default
+  labels:
+    app: fastapi-backstage-demo
+    component: backend
+    system: demo-system
+    backstage.io/kubernetes-id: fastapi-backstage-demo
+  annotations:
+    # Service annotations para service mesh y monitoring
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8000"
+    prometheus.io/path: "/metrics"
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  selector:
+    app: fastapi-backstage-demo

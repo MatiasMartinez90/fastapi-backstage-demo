@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fastapi-backstage-demo
+  namespace: default
+  labels:
+    app: fastapi-backstage-demo
+    component: backend
+    system: demo-system
+    backstage.io/kubernetes-id: fastapi-backstage-demo
+  annotations:
+    # Traefik annotations
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    
+    # Additional annotations for monitoring/service mesh
+    backstage.io/component: fastapi-backstage-demo
+spec:
+  tls:
+  - hosts:
+    - fastapi-demo.cloud-it.com.ar
+    secretName: fastapi-backstage-demo-tls
+  rules:
+  - host: fastapi-demo.cloud-it.com.ar
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: fastapi-backstage-demo
+            port:
+              number: 80

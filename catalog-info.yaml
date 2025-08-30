@@ -1,0 +1,108 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: fastapi-backstage-demo
+  title: FastAPI Backstage Demo
+  description: API de ejemplo en FastAPI para demostrar integración con Backstage, ArgoCD, Grafana y Kubecost
+  tags:
+    - python
+    - fastapi
+    - api
+    - demo
+    - kubernetes
+  annotations:
+    # GitHub
+    github.com/project-slug: MatiasMartinez90/fastapi-backstage-demo
+    
+    # Future integrations (comentadas por ahora)
+    # argocd/app-name: fastapi-backstage-demo
+    # grafana/dashboard-selector: 'component=fastapi-backstage-demo'
+    # grafana/alert-label-selector: 'service=fastapi-backstage-demo'
+    # kubecost/deployment-name: 'fastapi-backstage-demo'
+    
+    # Kubernetes
+    backstage.io/kubernetes-id: fastapi-backstage-demo
+    backstage.io/kubernetes-namespace: default
+    
+    # Documentation
+    backstage.io/source-location: url:https://github.com/MatiasMartinez90/fastapi-backstage-demo/tree/main/
+spec:
+  type: service
+  lifecycle: production
+  owner: user:default/matias.martinez
+  system: demo-system
+  providesApis:
+    - fastapi-demo-api
+  dependsOn:
+    - resource:default/demo-database
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: fastapi-demo-api
+  title: FastAPI Demo API
+  description: REST API for managing items
+  tags:
+    - rest
+    - json
+    - fastapi
+spec:
+  type: openapi
+  lifecycle: production
+  owner: user:default/matias.martinez
+  system: demo-system
+  definition: |
+    openapi: 3.0.0
+    info:
+      title: FastAPI Backstage Demo
+      version: 1.0.0
+      description: API de ejemplo para integración con Backstage
+    paths:
+      /health:
+        get:
+          summary: Health Check
+          responses:
+            '200':
+              description: Service is healthy
+      /items:
+        get:
+          summary: Get all items
+          responses:
+            '200':
+              description: List of items
+        post:
+          summary: Create new item
+          responses:
+            '200':
+              description: Item created
+      /items/{item_id}:
+        get:
+          summary: Get item by ID
+          parameters:
+            - name: item_id
+              in: path
+              required: true
+              schema:
+                type: integer
+          responses:
+            '200':
+              description: Item details
+            '404':
+              description: Item not found
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: demo-database
+  title: Demo Database
+  description: In-memory database for FastAPI demo
+  tags:
+    - database
+    - in-memory
+spec:
+  type: database
+  lifecycle: production
+  owner: user:default/matias.martinez
+  system: demo-system

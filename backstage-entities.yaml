@@ -1,0 +1,52 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: matias.martinez
+  title: Matias Martinez  
+  description: Platform Engineer and Developer
+spec:
+  profile:
+    displayName: Matias Martinez
+    email: matias.martinez@example.com
+    picture: https://github.com/MatiasMartinez90.png
+  memberOf:
+    - platform-team
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: platform-team
+  title: Platform Team
+  description: Platform and Infrastructure team
+spec:
+  type: team
+  profile:
+    displayName: Platform Team
+    email: platform-team@example.com
+  children: []
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: demo-system
+  title: Demo System
+  description: System for demo applications and proof of concepts
+  tags:
+    - demo
+    - development
+    - poc
+spec:
+  owner: group:default/platform-team
+  domain: demo-domain
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: demo-domain
+  title: Demo Domain
+  description: Domain for demo applications and experiments
+spec:
+  owner: group:default/platform-team

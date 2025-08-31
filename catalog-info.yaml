@@ -14,8 +14,8 @@ metadata:
     # GitHub
     github.com/project-slug: MatiasMartinez90/fastapi-backstage-demo
     
-    # Future integrations (comentadas por ahora)
-    # argocd/app-name: fastapi-backstage-demo
+    # ArgoCD Integration
+    argocd/app-name: fastapi-backstage-demo
     # grafana/dashboard-selector: 'component=fastapi-backstage-demo'
     # grafana/alert-label-selector: 'service=fastapi-backstage-demo'
     # kubecost/deployment-name: 'fastapi-backstage-demo'

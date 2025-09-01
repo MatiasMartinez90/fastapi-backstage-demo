@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: fastapi-app
-        image: matiasmartinez90/fastapi-backstage-demo:latest
+        image: 982081083386.dkr.ecr.us-east-1.amazonaws.com/fastapi-backstage-demo:latest
         ports:
         - containerPort: 8000
           name: http
@@ -70,6 +70,9 @@ spec:
           periodSeconds: 5
           timeoutSeconds: 3
           failureThreshold: 30
+      # Image pull secrets for ECR
+      imagePullSecrets:
+      - name: ecr-secret
       # Security context
       securityContext:
         runAsNonRoot: true
